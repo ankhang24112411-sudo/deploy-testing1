@@ -6,7 +6,6 @@ services:
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      SPRING_JPA_HIBERNATE_DDL_AUTO: none
     volumes:
       - mysql-data:/var/lib/mysql
       - ./db/webtracnghiem:/docker-entrypoint-initdb.d:ro
@@ -56,6 +55,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_NAME}?allowPublicKeyRetrieval=true&useSSL=false
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
 
     expose:
       - "8095"
