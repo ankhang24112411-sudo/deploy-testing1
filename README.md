@@ -33,3 +33,14 @@ ENTRYPOINT ["java", "-jar", "app.war"]
 
 ## Stage 3 : nginx configurations
 
+
+
+## Stage : 
+# gen key for CI/CD
+ ssh-keygen -t ed25519 -C "github-actions-deploy" -f github-actions-deploy
+
+ ls -la github-actions-deploy*
+
+cat github-actions-deploy.pub
+
+ cat github-actions-deploy
