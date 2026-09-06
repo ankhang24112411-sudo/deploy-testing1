@@ -1,5 +1,4 @@
 services:
-
   db:
     image: mysql:8.0
     restart: unless-stopped
@@ -10,7 +9,6 @@ services:
 
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./database/init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
 
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${DB_ROOT_PASSWORD}"]
@@ -21,8 +19,9 @@ services:
     networks:
       - test-network
 
-
-  api:
+  # Hai container chay cung du an Spring hien tai de mo phong dinh tuyen.
+  # Ten service khong tu tach controller HTML va REST API trong source code.
+  web:
     build:
       context: .
       dockerfile: Dockerfile
@@ -31,7 +30,6 @@ services:
 
     environment:
       SERVER_PORT: 8095
-
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_NAME}?allowPublicKeyRetrieval=true&useSSL=false
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -46,20 +44,28 @@ services:
     networks:
       - test-network
 
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
 
-  web:
-    image: nginx:alpine
     restart: unless-stopped
 
-    volumes:
-      - ./web:/usr/share/nginx/html:ro
+    environment:
+      SERVER_PORT: 8095
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_NAME}?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD}
 
     expose:
-      - "80"
+      - "8095"
+
+    depends_on:
+      db:
+        condition: service_healthy
 
     networks:
       - test-network
-
 
   nginx:
     image: nginx:alpine
@@ -69,7 +75,7 @@ services:
       - "80:80"
 
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/deploy-test1.conf:/etc/nginx/conf.d/default.conf:ro
 
     depends_on:
       - web
@@ -78,11 +84,9 @@ services:
     networks:
       - test-network
 
-
 networks:
   test-network:
     driver: bridge
-
 
 volumes:
   mysql-data:
