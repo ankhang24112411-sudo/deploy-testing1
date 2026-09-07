@@ -1,0 +1,55 @@
+name: Deploy Testing1
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+
+          chmod 600 ~/.ssh/id_ed25519
+
+          cat <<EOF > ~/.ssh/config
+          Host deploy-server
+            HostName ${{ secrets.DEPLOY_HOST }}
+            User ${{ secrets.DEPLOY_USER }}
+            Port ${{ secrets.DEPLOY_PORT }}
+            IdentityFile ~/.ssh/id_ed25519
+            StrictHostKeyChecking no
+            ServerAliveInterval 30
+            ServerAliveCountMax 20
+            ConnectTimeout 30
+          EOF
+
+      - name: Deploy to server
+        run: |
+          ssh deploy-server << 'EOF'
+            set -e
+
+            # Bật Ubuntu container nếu đang dừng
+            docker start 7ed41fec6d5c || true
+
+            # Vào Ubuntu container và deploy
+            docker exec 7ed41fec6d5c bash -lc '
+              set -e
+
+              cd /deploy-testing1
+
+              git fetch origin
+              git checkout dev
+              git reset --hard origin/dev
+
+              docker compose -f docker-compose.prod.yml up -d --build
+
+              docker image prune -f
+            '
+          EOF
