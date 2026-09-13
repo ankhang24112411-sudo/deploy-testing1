@@ -43,29 +43,6 @@ services:
     networks:
       - test-network
 
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-
-    restart: unless-stopped
-
-    environment:
-      SERVER_PORT: 8095
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_NAME}?allowPublicKeyRetrieval=true&useSSL=false
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD}
-      SPRING_JPA_HIBERNATE_DDL_AUTO: none
-
-    expose:
-      - "8095"
-
-    depends_on:
-      db:
-        condition: service_healthy
-
-    networks:
-      - test-network
 
   nginx:
     image: nginx:alpine
