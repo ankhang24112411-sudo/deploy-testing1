@@ -36,7 +36,7 @@
 <body>
 <div id="preloader"></div>
 <!-- Importing NavBar -->
-<div th:insert="~{/default-page :: navbar}"></div>
+<div th:insert="~{default-page :: navbar}"></div>
 
 <!-- Main Container Start -->
 <div class="main-container container py-5 px-4 "style="width: 2000px;">
@@ -51,9 +51,9 @@
             <th>STT</th>
             <th>Môn học</th>
             <th>Tên người dùng</th>
-            <th>Tên đề thi</th>
+            <th>Tên đềEthi</th>
             <th>Bài học</th>
-            <th>Điểm số</th>
+            <th>Điểm sềE/th>
         </tr>
         <tr th:each="score, count : ${sList}" th:class="${score.users.id == #authentication.name ? 'you' : null}">
             <td>
@@ -75,7 +75,7 @@
     </table>
 </div>
 <!-- Footer -->
-<div th:replace="~{/default-page :: footer}"></div>
+<div th:replace="~{default-page :: footer}"></div>
 <!-- Footer -->
 </body>
 <script type="text/javascript" th:src="@{//code.jquery.com/jquery-1.11.0.min.js}"></script>

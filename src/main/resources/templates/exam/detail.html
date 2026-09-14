@@ -30,8 +30,8 @@
 </head>
 <body>
 <div id="preloader"></div>
-<div th:insert="~{/default-page :: navbar}"></div>
-<div th:replace="~{/default-page :: banner}"></div>
+<div th:insert="~{default-page :: navbar}"></div>
+<div th:replace="~{default-page :: banner}"></div>
 <!-- Main Container Start -->
 <div class="container-fluid mt-3">
     <div class="row" style="margin: 0 5%">
@@ -46,7 +46,7 @@
                                  th:text="${exam.view - 1 + ' lượt xem' + ' | '+exam.turn+ ' lượt thi' + ' | '+#dates.format(exam.createDate,'dd/MM/yyyy')}"></div>
                             <div class="more-info">
                                 <ul>
-                                    <li>Số lượng câu hỏi: <span th:text="${exam.questions.size() + ' câu'}"></span></li>
+                                    <li>SềElượng câu hỏi: <span th:text="${exam.questions.size() + ' câu'}"></span></li>
                                     <li>Thời gian làm bài: <span
                                             th:text="${exam.free == true ? 'Không' : exam.time + ' phút'}"></span></li>
                                     <li>Môn: <span style="text-transform: uppercase" th:text="${exam.lesson.chapter.subjectClasses.subject.name}+' '+${exam.lesson.chapter.subjectClasses.classes.nameClass}"></span></li>
@@ -59,15 +59,15 @@
                             <h3>Thời gian làm bài:</h3>
                             <ul>
                                 <li>Thời gian sẽ được tính khi bạn chọn nút "Bắt đầu"</li>
-                                <li>Khi hết thời gian làm bài, hệ thống sẽ tự động nộp bài và tính điểm cho học sinh</li>
-                                <li>Nếu bài thi bị lỗi hãy phản hồi qua email : dunglee102@gmail.com</li>
+                                <li>Khi hết thời gian làm bài, hềEthống sẽ tự động nộp bài và tính điểm cho học sinh</li>
+                                <li>Nếu bài thi bềElỗi hãy phản hồi qua email : dunglee102@gmail.com</li>
                             </ul>
                             <h3>Các trường hợp vi phạm:</h3>
                             <ul>
-                                <li>Đăng nhập một tài khoản trên hai thiết bị hoặc hai trình duyệt khác nhau và thi cùng một thời điểm</li>
-                                <li>Mở nhiều cửa sổ thi vào thi cùng một lúc</li>
+                                <li>Đăng nhập một tài khoản trên hai thiết bềEhoặc hai trình duyệt khác nhau và thi cùng một thời điểm</li>
+                                <li>MềEnhiều cửa sềEthi vào thi cùng một lúc</li>
                             </ul>
-                            <h3>Các trường hợp cố tình vi phạm sẽ bị hệ thống ghi nhận và thông báo cho nhà trường!</h3>
+                            <h3>Các trường hợp cềEtình vi phạm sẽ bềEhềEthống ghi nhận và thông báo cho nhà trường!</h3>
                         </div>
                         <div class="exam-action">
                             <a th:href="@{/quiz1/__${exam.id}__}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Bắt đầu</a>
@@ -82,7 +82,7 @@
 </div>
 
 <!-- Footer -->
-<div th:replace="~{/default-page :: footer}"></div>
+<div th:replace="~{default-page :: footer}"></div>
 <!-- Footer -->
 
 <!-- Bootstrap JS -->

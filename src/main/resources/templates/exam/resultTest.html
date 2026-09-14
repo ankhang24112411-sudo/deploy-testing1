@@ -30,7 +30,7 @@
 <body>
 
 <!-- Importing NavBar -->
-<div th:insert="~{/default-page :: navbar}"></div>
+<div th:insert="~{default-page :: navbar}"></div>
 
 <!-- Main Container Start -->
 <div class="main-container container">
@@ -49,11 +49,11 @@
                 <p class="more-value" th:if="${result}" th:text="${time}"></p>
             </div>
             <div class="d-flex">
-                <p>Tổng số câu trả lời đúng:&nbsp;&nbsp;</p>
+                <p>Tổng sềEcâu trả lời đúng:&nbsp;&nbsp;</p>
                 <p class="more-value" th:if="${result}" th:text="${#numbers.formatDecimal((qForm.questions.size() * result.mark) / 10,0,0)} + ' câu'"></p>
             </div>
             <div class="d-flex">
-                <p>Tổng số câu trả lời sai:&nbsp;&nbsp;</p>
+                <p>Tổng sềEcâu trả lời sai:&nbsp;&nbsp;</p>
                 <p class="more-value" th:if="${result}" th:text="${#numbers.formatDecimal(qForm.questions.size - ((qForm.questions.size() * result.mark) / 10),0,0)} + ' câu'"></p>
             </div>
             <div class="d-flex">
@@ -65,13 +65,13 @@
             <a type="button" th:href='@{/score/{id}(id=${idExam})}'
                class="btn btn-outline-warning">Xem thứ hạng</a>
             <a type="button" th:href='@{/}'
-               class="btn btn-outline-warning">Về trang chủ</a>
+               class="btn btn-outline-warning">VềEtrang chủ</a>
         </div>
     </div>
 </div>
 
 <!-- Footer -->
-<div th:replace="~{/default-page :: footer}"></div>
+<div th:replace="~{default-page :: footer}"></div>
 <!-- Footer -->
 
 <script type="text/javascript" th:src="@{//code.jquery.com/jquery-1.11.0.min.js}"></script>

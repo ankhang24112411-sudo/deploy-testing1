@@ -89,6 +89,13 @@
             <artifactId>spring-boot-starter-validation</artifactId>
             <version>3.0.4</version>
         </dependency>
+        
+        <!-- Add spring-dotenv to read .env file -->
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>3.0.0</version>
+        </dependency>
 
     </dependencies>
 
