@@ -39,8 +39,8 @@
 </head>
 <body>
 <div id="preloader"></div>
-<div th:replace="~{/default-page :: navbar}"></div>
-<div th:replace="~{/default-page :: banner}"></div>
+<div th:replace="~{default-page :: navbar}"></div>
+<div th:replace="~{default-page :: banner}"></div>
 <!-- Main Container Start -->
 <div class="container-fluid mt-3">
     <div class="row" style="margin: 0 5%">
@@ -58,8 +58,8 @@
                         <div class="mid_card card-block col-sm-12 col-lg-6 mb-2 rounded btn">
                             <div class="exam-detail-header">
                                 <h1>Tạo bài kiểm tra trắc nghiệm</h1>
-                                <div>Đây là bài kiểm tra tổng hợp toàn bộ các câu hỏi từ các môn học khác nhau. Học sinh có
-                                    thể tùy chọn bài
+                                <div>Đây là bài kiểm tra tổng hợp toàn bềEcác câu hỏi từ các môn học khác nhau. Học sinh có
+                                    thềEtùy chọn bài
                                     kiểm tra theo mong muốn của mình.
                                 </div>
                                 <div class="more-info">
@@ -81,10 +81,10 @@
                                                 </th:block>
                                             </select>
                                         </li>
-                                        <li>Số lượng câu hỏi:
+                                        <li>SềElượng câu hỏi:
                                             <select th:field="*{numQuestion}" id="num" class="btn dropdown-toggle" data-toggle="dropdown"
                                                     style="background-color: #93f1ab;" onchange="validate()">
-                                                <option value="0" id="choose" selected disabled>--Số câu hỏi--</option>
+                                                <option value="0" id="choose" selected disabled>--SềEcâu hỏi--</option>
                                                 <option value="10" name="numQuestion">10 câu</option>
                                                 <option value="15" name="numQuestion">15 câu</option>
                                                 <option value="20" name="numQuestion">20 câu</option>
@@ -120,18 +120,18 @@
                                 <h3>Thời gian làm bài:</h3>
                                 <ul>
                                     <li>Thời gian sẽ được tính khi bạn chọn nút "Bắt đầu"</li>
-                                    <li>Khi hết thời gian làm bài, hệ thống sẽ tự động nộp bài và tính điểm cho học sinh
+                                    <li>Khi hết thời gian làm bài, hềEthống sẽ tự động nộp bài và tính điểm cho học sinh
                                     </li>
-                                    <li>Nếu bài thi bị lỗi hãy phản hồi qua email : dunglee102@gmail.com</li>
+                                    <li>Nếu bài thi bềElỗi hãy phản hồi qua email : dunglee102@gmail.com</li>
                                 </ul>
                                 <h3>Các trường hợp vi phạm:</h3>
                                 <ul>
-                                    <li>Đăng nhập một tài khoản trên hai thiết bị hoặc hai trình duyệt khác nhau và thi cùng
+                                    <li>Đăng nhập một tài khoản trên hai thiết bềEhoặc hai trình duyệt khác nhau và thi cùng
                                         một thời điểm
                                     </li>
-                                    <li>Mở nhiều cửa sổ thi vào thi cùng một lúc</li>
+                                    <li>MềEnhiều cửa sềEthi vào thi cùng một lúc</li>
                                 </ul>
-                                <h3>Các trường hợp cố tình vi phạm sẽ bị hệ thống ghi nhận và thông báo cho nhà trường!</h3>
+                                <h3>Các trường hợp cềEtình vi phạm sẽ bềEhềEthống ghi nhận và thông báo cho nhà trường!</h3>
                             </div>
                             <div class="exam-action">
                                 <button type="submit" class="btn btn-info" id="btnSub" style="display: none"><i class="fa-solid fa-pen-to-square"></i> Bắt đầu</button>
@@ -146,7 +146,7 @@
     </div>
 </div>
 <!-- Footer -->
-<div th:replace="~{/default-page :: footer}"></div>
+<div th:replace="~{default-page :: footer}"></div>
 <!-- Footer -->
 
 <!-- Bootstrap JS -->
