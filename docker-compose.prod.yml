@@ -1,5 +1,5 @@
-
 services:
+
   db:
     image: mysql:8.0
     restart: unless-stopped
@@ -7,11 +7,21 @@ services:
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+
     volumes:
       - mysql-data:/var/lib/mysql
       - ./db/webtracnghiem:/docker-entrypoint-initdb.d:ro
+
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${DB_ROOT_PASSWORD}"]
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-p${DB_ROOT_PASSWORD}"
+        ]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -19,8 +29,39 @@ services:
     networks:
       - test-network
 
+
+  # =========================
+  # Spring Boot
+  # =========================
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: unless-stopped
+
+    environment:
+      SERVER_PORT: 8095
+
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_NAME}?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD}
+
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+
+    expose:
+      - "8095"
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    networks:
+      - test-network
+
+
   # Hai container chay cung du an Spring hien tai de mo phong dinh tuyen.
-  # Ten service khong tu tach controller HTML va REST API trong source code.
+  # Ten service khong tu tach controller HTML va REST API
   nginx:
     image: nginx:alpine
     restart: unless-stopped
@@ -36,25 +77,12 @@ services:
 
     networks:
       - test-network
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
 
-    restart: unless-stopped
+networks:
+  test-network:
+    driver: bridge
 
-    environment:
-      SERVER_PORT: 8095
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_NAME}?allowPublicKeyRetrieval=true&useSSL=false
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD}
-      SPRING_JPA_HIBERNATE_DDL_AUTO: none
-    expose:
-      - "8095"
 
-    depends_on:
-      db:
-        condition: service_healthy
 
-    networks:
-      - test-network
+volumes:
+  mysql-data:
