@@ -181,7 +181,7 @@
         console.log(...listSubjectClasses);
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8095/api/subjectClasses',
+            url: '/api/subjectClasses',
             data: listSubjectClasses,
             enctype: 'multipart/form-data',
             processData: false,
@@ -191,7 +191,7 @@
                 console.log(error);
             },
             success: function () {
-                window.location.replace('http://localhost:8095/subject/list/'+$("#id").val()+'?create=' + true);
+                window.location.replace('/subject/list/'+$("#id").val()+'?create=' + true);
             }
         });
     });

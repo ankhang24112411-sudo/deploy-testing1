@@ -3,7 +3,7 @@ package com.tttn.webthitracnghiem.service.impl;
 import com.tttn.webthitracnghiem.model.Excel;
 import com.tttn.webthitracnghiem.model.Question;
 import com.tttn.webthitracnghiem.model.Subject;
-import com.tttn.webthitracnghiem.service.IFileService;
+import com.tttn.webthitracnghiem.service.UploadStorageService;
 import com.tttn.webthitracnghiem.service.IUploadExcel;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -29,21 +29,14 @@ public class UploadExcelImpl implements IUploadExcel {
     public static final int COLUMN_INDEX_OPTION_4 = 5;
     public static final int COLUMN_INDEX_ANSWER = 6;
     @Autowired
-    private IFileService fileService;
+    private UploadStorageService uploadStorageService;
 
     @Override
     public String upload(Excel excel) {
-        String realUrl = new File(".").getAbsolutePath();
-        // Thêm file mới được chọn
-        String pathFile = realUrl + "\\src\\main\\resources\\static\\excel";
-        // Đọc file
         String fileName = excel.getFile().getOriginalFilename();
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
         String newFileName = fileName.substring(0, fileName.lastIndexOf(".")) + System.currentTimeMillis() + '.' + extension;
-        File folder = new File(pathFile);
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
+        File folder = uploadStorageService.folderFile("excel");
         File fileSaved = new File(folder.getAbsolutePath() + File.separator + newFileName);
         FileOutputStream fos;
         BufferedOutputStream bs;
@@ -56,8 +49,6 @@ public class UploadExcelImpl implements IUploadExcel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        File targetAvatar = new File(realUrl + "\\target\\classes\\static\\excel\\" + fileSaved.getName());
-        fileService.copyFile(fileSaved, targetAvatar);
         return fileSaved.getAbsolutePath();
     }
 

@@ -4,7 +4,7 @@ import com.tttn.webthitracnghiem.model.Subject;
 import com.tttn.webthitracnghiem.model.User;
 import com.tttn.webthitracnghiem.model.UserRequest;
 import com.tttn.webthitracnghiem.repository.UserRepository;
-import com.tttn.webthitracnghiem.service.IFileService;
+import com.tttn.webthitracnghiem.service.UploadStorageService;
 import com.tttn.webthitracnghiem.service.IUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
-    private IFileService fileService;
+    private UploadStorageService uploadStorageService;
 
     @Override
     public Page<User> findAll(Pageable pageable) {
@@ -98,23 +98,10 @@ public class UserServiceImpl implements IUserService {
             user = modelMapper.map(userRequest,User.class);
             oldUrl = findUser.get().getImg();
         }
-        String realUrl = new File(".").getAbsolutePath();
         if(userRequest.getImg() != null){
-            if(!oldUrl.equals("/img/avatar/default.jpg")) {
-                // Xóa file cũ
-                File file = new File(realUrl + "\\src\\main\\resources\\static\\img\\avatar\\"
-                        + oldUrl.substring(oldUrl.lastIndexOf("/") + 1));
-                File target = new File(realUrl + "\\target\\classes\\static\\img\\avatar\\" +
-                        oldUrl.substring(oldUrl.lastIndexOf("/") + 1));
-                file.delete();
-                target.delete();
-            }
-            // Thêm file mới được chọn
-            String pathFile = realUrl+"\\src\\main\\resources\\static\\img\\avatar";
-            File fileSaved = fileService.uploadFile(userRequest.getImg(), pathFile);
+            uploadStorageService.deleteUploadedFile(oldUrl, "/img/avatar/default.jpg", "img/avatar");
+            File fileSaved = uploadStorageService.upload(userRequest.getImg(), "img/avatar");
             avatarPath = "/img/avatar/" + fileSaved.getName();
-            File targetAvatar = new File(realUrl+"\\target\\classes\\static\\img\\avatar\\" + fileSaved.getName());
-            fileService.copyFile(fileSaved, targetAvatar);
         } else {
             avatarPath = oldUrl;
         }
