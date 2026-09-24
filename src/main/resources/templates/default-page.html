@@ -53,7 +53,7 @@
             <div class="item">
                 <a href="/tai-lieu">Tài liệu</a>
             </div>
-            <div class="item" th:if="${session.admin != null}">
+            <div class="item" sec:authorize="hasRole('ADMIN')">
                 <a href="/user/list">Quản lý</a>
             </div>
             <div class="item">

@@ -5,6 +5,7 @@ import com.tttn.webthitracnghiem.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -18,6 +19,15 @@ public class CurrentUserAdvice {
     @ModelAttribute
     public void addCurrentUserToSession(Authentication authentication, HttpSession session) {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken || !authentication.isAuthenticated()) {
+            session.removeAttribute("admin");
+            return;
+        }
+
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch("ROLE_ADMIN"::equals);
+        if (!isAdmin) {
+            session.removeAttribute("admin");
             return;
         }
 
