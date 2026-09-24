@@ -67,6 +67,26 @@ public class HomeController {
         return "login";
     }
 
+    @GetMapping("/services")
+    public String servicesAlias() {
+        return "redirect:/default";
+    }
+
+    @GetMapping("/cases")
+    public String casesAlias() {
+        return "redirect:/tin-tuc";
+    }
+
+    @GetMapping("/about")
+    public String aboutAlias() {
+        return "redirect:/tai-lieu";
+    }
+
+    @GetMapping("/contact")
+    public String contactAlias() {
+        return "redirect:/login";
+    }
+
     @GetMapping("/")
     public String show(Model model, @PageableDefault(value = 10) Pageable pageable) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
